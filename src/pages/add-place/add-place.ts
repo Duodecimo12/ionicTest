@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
 import { NgForm } from '@angular/forms';
+import { ModalController } from 'ionic-angular';
+import { SetLocationPage } from '../set-location/set-location';
 
 @Component({
   selector: 'page-add-place',
@@ -8,12 +9,17 @@ import { NgForm } from '@angular/forms';
 })
 export class AddPlacePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(private modalCtrl:ModalController,
+              ) {
   }
 
   onSubmit(form:NgForm){
     console.log(form.value);
   }
 
+  onOpenMap(){
+    let modal = this.modalCtrl.create(SetLocationPage);
+    modal.present();
+  }
 
 }
