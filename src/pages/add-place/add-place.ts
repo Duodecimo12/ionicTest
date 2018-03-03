@@ -10,6 +10,7 @@ import { Location } from '../../models/location';
 })
 export class AddPlacePage {
   location:Location = {lat:36.731470384526965, lan:10.210593179614534};
+  locationIsSet:boolean = false;
 
   constructor(private modalCtrl:ModalController,
               ) {
@@ -20,8 +21,16 @@ export class AddPlacePage {
   }
 
   onOpenMap(){
-    let modal = this.modalCtrl.create(SetLocationPage,{ location:this.location } );
+    let modal = this.modalCtrl.create(SetLocationPage,{ location:this.location,isSet:this.locationIsSet } );
     modal.present();
+    modal.onDidDismiss(data=>{
+      if(data){
+        this.location = data.location;
+        this.locationIsSet = true;
+      }
+      
+      //console.log(data);
+    })
   }
 
 }
