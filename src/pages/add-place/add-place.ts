@@ -2,9 +2,13 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ModalController, LoadingController, ToastController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 
 import { SetLocationPage } from '../set-location/set-location';
 import { Location } from '../../models/location';
+
+
+
 
 @Component({
   selector: 'page-add-place',
@@ -13,11 +17,13 @@ import { Location } from '../../models/location';
 export class AddPlacePage {
   location:Location = {lat:36.731470384526965, lan:10.210593179614534};
   locationIsSet:boolean = false;
+  imageUrl:string = '';
 
   constructor(private modalCtrl:ModalController,
               private geolocation: Geolocation,
               private loadingCtrl: LoadingController,
               private toastCtrl: ToastController,
+              private camera: Camera,
             ) {
   }
 
@@ -60,6 +66,24 @@ export class AddPlacePage {
         });
         toast.present();        
      });
+  }
+
+  onTakePhoto(){
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
+    }
+    
+    this.camera.getPicture(options).then((imageData) => {
+     // imageData is either a base64 encoded string or a file URI
+     // If it's base64:
+     //let base64Image = 'data:image/jpeg;base64,' + imageData;
+     this.imageUrl = imageData;
+    }, (err) => {
+     // Handle error
+    });
   }
 
 }
