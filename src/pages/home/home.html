@@ -13,7 +13,7 @@
 
 <ion-content class="card-background-page">
 
-  <ion-card *ngFor="let place of places" (click)="onOpenPlace(place)">
+  <ion-card *ngFor="let place of places; let i=index" (click)="onOpenPlace(place,i)">
     <img [src]="place.imageUrl"/>
     <div class="card-title">{{place.title}}</div>
     <div class="card-subtitle">{{place.description}}</div>
