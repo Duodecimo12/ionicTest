@@ -4,7 +4,7 @@ import { AddPlacePage } from './add-place';
 
 @NgModule({
   declarations: [
-    AddPlacePage,
+
   ],
   imports: [
     IonicPageModule.forChild(AddPlacePage),

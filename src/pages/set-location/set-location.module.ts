@@ -4,7 +4,7 @@ import { SetLocationPage } from './set-location';
 
 @NgModule({
   declarations: [
-    SetLocationPage,
+
   ],
   imports: [
     IonicPageModule.forChild(SetLocationPage),
