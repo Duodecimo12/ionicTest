@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ModalController, LoadingController, ToastController } from 'ionic-angular';
-import { Geolocation } from '@ionic-native/geolocation';
+import { Geolocation, GeolocationOptions, Geoposition } from '@ionic-native/geolocation';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 
 import { SetLocationPage } from '../set-location/set-location';
@@ -16,6 +16,9 @@ import { PlacesService } from '../../services/places.service';
   templateUrl: 'add-place.html',
 })
 export class AddPlacePage {
+  geolocationOptions : GeolocationOptions;
+  currentPosition : Geoposition;
+
   location:Location = {lat:36.731470384526965, lan:10.210593179614534};
   locationIsSet:boolean = false;
   imageUrl:string = '';
@@ -62,8 +65,11 @@ export class AddPlacePage {
     });
     loader.present();
 
-    this.geolocation.getCurrentPosition()
-    .then((resp) => {
+    this.geolocationOptions = {
+      timeout:20000,
+    }
+    this.geolocation.getCurrentPosition(this.geolocationOptions)
+    .then((resp:Geoposition) => {
         loader.dismiss();
         this.location.lat = resp.coords.latitude;
         this.location.lan = resp.coords.longitude;
