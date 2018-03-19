@@ -10,6 +10,7 @@ import { PlacesService } from '../../services/places.service';
 export class PlacePage {
   place:Place;
   index:number;
+  deleted:boolean = false;
 
   constructor(private navParams: NavParams,
               private viewCtrl: ViewController,
@@ -19,11 +20,12 @@ export class PlacePage {
   }
 
   onLeave(){
-    this.viewCtrl.dismiss();
+    this.viewCtrl.dismiss(this.deleted);
   }
 
   onDelete(){
     this.placesService.deletePlace(this.index);
+    this.deleted = true;
     this.onLeave();
   }
 

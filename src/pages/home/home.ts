@@ -21,7 +21,12 @@ export class HomePage {
 
   onOpenPlace(place:Place,i:number){
     let modal = this.modalCtrl.create(PlacePage,{place,i});
-    modal.present();    
+    modal.present();
+    modal.onDidDismiss(data => {
+      if(data)
+        this.places = this.placesService.loadPlaces();
+    });
+       
   }
 
   ionViewWillEnter(){
