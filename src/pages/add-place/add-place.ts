@@ -66,10 +66,10 @@ export class AddPlacePage {
     loader.present();
 
     this.geolocationOptions = {
-      enableHighAccuracy: true,
-      timeout: 5000,
-      maximumAge: 0
+      timeout:5000,
+      enableHighAccuracy:false,
     }
+
     this.geolocation.getCurrentPosition(this.geolocationOptions)
     .then((resp:Geoposition) => {
         loader.dismiss();
@@ -82,7 +82,7 @@ export class AddPlacePage {
         console.log('Error getting location', error);
         let toast = this.toastCtrl.create({
           message: 'Couldn\'t get location, please pick it manually',
-          duration: 1500
+          duration: 2000,
         });
         toast.present();        
      });
