@@ -66,7 +66,9 @@ export class AddPlacePage {
     loader.present();
 
     this.geolocationOptions = {
-      timeout:20000,
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0
     }
     this.geolocation.getCurrentPosition(this.geolocationOptions)
     .then((resp:Geoposition) => {
