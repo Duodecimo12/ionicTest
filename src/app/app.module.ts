@@ -6,6 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { AgmCoreModule } from '@agm/core';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Camera } from '@ionic-native/camera';
+import { LocationAccuracy } from '@ionic-native/location-accuracy';
 
 
 import { MyApp } from './app.component';
@@ -44,6 +45,7 @@ import { PlacesService } from '../services/places.service';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Geolocation,
+    LocationAccuracy,
     Camera,
     PlacesService,
   ]

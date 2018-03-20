@@ -7,6 +7,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import { SetLocationPage } from '../set-location/set-location';
 import { Location } from '../../models/location';
 import { PlacesService } from '../../services/places.service';
+import { LocationAccuracy } from '@ionic-native/location-accuracy';
 
 
 
@@ -29,6 +30,7 @@ export class AddPlacePage {
               private toastCtrl: ToastController,
               private camera: Camera,
               private placesService: PlacesService,
+              private locationAccuracy: LocationAccuracy,
             ) {
   }
 
@@ -60,6 +62,22 @@ export class AddPlacePage {
   }
 
   onLocate(){
+
+    
+    this.locationAccuracy.canRequest().then((canRequest: boolean) => {
+
+      if(canRequest) {
+        // the accuracy option will be ignored by iOS
+        this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
+          () => console.log('Request successful'),
+          error => console.log('Error requesting location permissions', error)
+        );
+      }
+    
+    });
+
+
+
     let loader = this.loadingCtrl.create({
       content: "Getting your location..."
     });
