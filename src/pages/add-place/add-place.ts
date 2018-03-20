@@ -79,6 +79,8 @@ export class AddPlacePage {
      })
      .catch((error) => {
         loader.dismiss();
+        alert(error);
+        alert(error.code);
         console.log('Error getting location', error);
         let toast = this.toastCtrl.create({
           message: 'Couldn\'t get location, please pick it manually',
