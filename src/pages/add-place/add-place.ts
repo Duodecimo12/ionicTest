@@ -64,7 +64,7 @@ export class AddPlacePage {
   onLocate(){
 
     this.locationAccuracy.canRequest().then((canRequest: boolean) => {
-      
+
       if(canRequest) {
         // the accuracy option will be ignored by iOS
         this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
@@ -122,12 +122,29 @@ export class AddPlacePage {
      })
      .catch((error) => {
         loader.dismiss();
-        alert(error);
-        alert(error.code);
-        console.log('Error getting location', error);
+
+        let message;
+        switch(error.code) { 
+          case 1: { 
+             message = "The page didn't have the permission to do geolocation"; 
+             break; 
+          } 
+          case 2: { 
+             message = "The geolocation failed! Try again...";
+             break; 
+          } 
+          default: { 
+             message = "Your device is very slow! Try again...";
+             break; 
+          } 
+        }
+        alert(message);
+        if(error.code == 2)
+          this.onLocate();
+
         let toast = this.toastCtrl.create({
           message: 'Couldn\'t get location, please pick it manually',
-          duration: 2000,
+          duration: 3000,
         });
         toast.present();        
      });    
