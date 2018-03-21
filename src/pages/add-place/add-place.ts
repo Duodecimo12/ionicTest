@@ -69,10 +69,11 @@ export class AddPlacePage {
         // the accuracy option will be ignored by iOS
         this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
           () => {
-            alert('Request successful');
+            //alert('Request successful');
             this.getLocation();            
           },
           error => {
+            this.debugError(error);
             alert('Please activate your GPS');
           }
         );
@@ -96,7 +97,8 @@ export class AddPlacePage {
      let base64Image = 'data:image/jpeg;base64,' + imageData;
      this.imageUrl = base64Image;
     }, (err) => {
-     alert(JSON.stringify(err) );
+     //alert(JSON.stringify(err) );
+     this.debugError(err);
     });
 
   }
@@ -122,7 +124,8 @@ export class AddPlacePage {
      })
      .catch((error) => {
         loader.dismiss();
-        alert(JSON.stringify(error))
+        // alert(JSON.stringify(error))
+        this.debugError(error);
         let message;
         switch(error.code) { 
           case 1: { 
@@ -156,6 +159,14 @@ export class AddPlacePage {
         toast.present();        
      });    
 
+  }
+
+  debugError(object){
+    var output = '';
+    for (var property in object) {
+      output += property + ': ' + object[property]+'; ';
+    }
+    alert(output);    
   }
 
 }
