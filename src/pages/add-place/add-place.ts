@@ -72,8 +72,7 @@ export class AddPlacePage {
             //alert('Request successful');
             this.getLocation();            
           },
-          error => {
-            this.debugError(error);
+          error => {            
             alert('Please activate your GPS');
           }
         );
@@ -97,8 +96,8 @@ export class AddPlacePage {
      let base64Image = 'data:image/jpeg;base64,' + imageData;
      this.imageUrl = base64Image;
     }, (err) => {
-     //alert(JSON.stringify(err) );
-     this.debugError(err);
+      //alert(JSON.stringify(err) );
+      alert("Error when saving picture...");
     });
 
   }
@@ -111,7 +110,7 @@ export class AddPlacePage {
     loader.present();
 
     this.geolocationOptions = {
-      timeout:15000,
+      timeout:20000,
       enableHighAccuracy:false,
     }
 
@@ -125,7 +124,6 @@ export class AddPlacePage {
      .catch((error) => {
         loader.dismiss();
         // alert(JSON.stringify(error))
-        this.debugError(error);
         let message;
         switch(error.code) { 
           case 1: { 
@@ -159,14 +157,6 @@ export class AddPlacePage {
         toast.present();        
      });    
 
-  }
-
-  debugError(object){
-    var output = '';
-    for (var property in object) {
-      output += property + ': ' + object[property]+'; ';
-    }
-    alert(output);    
   }
 
 }
