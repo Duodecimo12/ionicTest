@@ -73,7 +73,7 @@ export class AddPlacePage {
             this.getLocation();            
           },
           error => {
-            alert('Error requesting location permissions'+ error);
+            alert('Please activate your GPS');
           }
         );
       }
@@ -96,7 +96,7 @@ export class AddPlacePage {
      let base64Image = 'data:image/jpeg;base64,' + imageData;
      this.imageUrl = base64Image;
     }, (err) => {
-     alert(err);
+     alert(JSON.stringify(err) );
     });
 
   }
@@ -122,21 +122,28 @@ export class AddPlacePage {
      })
      .catch((error) => {
         loader.dismiss();
-
+        alert(JSON.stringify(error))
         let message;
         switch(error.code) { 
           case 1: { 
-             message = "The page didn't have the permission to do geolocation"; 
-             break; 
-          } 
-          case 2: { 
-             message = "The geolocation failed! Try again...";
-             break; 
-          } 
+            //PERMISSION_DENIED
+            message = "The page didn't have the permission to do geolocation"; 
+            break; 
+          }
+          case 2: {
+            //POSITION_UNAVAILABLE
+            message = "The geolocation failed! Try again...";
+            break; 
+          }
+          case 3: {
+            //Timeout
+            message = "Your device is very slow! Please Try again...";
+            break; 
+          }
           default: { 
-             message = "Your device is very slow! Try again...";
-             break; 
-          } 
+            message = "Error while trying to get your location";
+            break;
+          }
         }
         alert(message);
         if(error.code == 2)
