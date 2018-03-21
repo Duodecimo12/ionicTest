@@ -63,20 +63,45 @@ export class AddPlacePage {
 
   onLocate(){
 
-    
     this.locationAccuracy.canRequest().then((canRequest: boolean) => {
-
+      
       if(canRequest) {
         // the accuracy option will be ignored by iOS
         this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
-          () => console.log('Request successful'),
-          error => console.log('Error requesting location permissions', error)
+          () => {
+            alert('Request successful');
+            this.getLocation();            
+          },
+          error => {
+            alert('Error requesting location permissions'+ error);
+          }
         );
       }
     
     });
 
+  }
 
+  onTakePhoto(){
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
+    }
+    
+    this.camera.getPicture(options).then((imageData) => {
+     // imageData is either a base64 encoded string or a file URI
+     // If it's base64:
+     let base64Image = 'data:image/jpeg;base64,' + imageData;
+     this.imageUrl = base64Image;
+    }, (err) => {
+     alert(err);
+    });
+
+  }
+
+  getLocation(){
 
     let loader = this.loadingCtrl.create({
       content: "Getting your location..."
@@ -84,7 +109,7 @@ export class AddPlacePage {
     loader.present();
 
     this.geolocationOptions = {
-      timeout:5000,
+      timeout:15000,
       enableHighAccuracy:false,
     }
 
@@ -105,25 +130,8 @@ export class AddPlacePage {
           duration: 2000,
         });
         toast.present();        
-     });
-  }
+     });    
 
-  onTakePhoto(){
-    const options: CameraOptions = {
-      quality: 100,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
-    }
-    
-    this.camera.getPicture(options).then((imageData) => {
-     // imageData is either a base64 encoded string or a file URI
-     // If it's base64:
-     let base64Image = 'data:image/jpeg;base64,' + imageData;
-     this.imageUrl = base64Image;
-    }, (err) => {
-     alert(err);
-    });
   }
 
 }
